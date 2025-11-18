@@ -104,30 +104,13 @@ public class TCA_FNF {
         }
         System.out.println("╚═════════════════════╝");
         System.out.println();
-        System.out.println("Use W/S para navegar e ENTER para selecionar. ESC para sair.");
+        System.out.println("Use (W/S) para navegar e (ENTER) para selecionar. (ESC) para sair.");
 
     }
 
     
-    public static double definirDificuldade(int Dificult) {
-        double velocidade = 0;
-        switch (Dificult) {
-            case 1:
-                velocidade = 1;
-                break;
-            case 2:
-                velocidade = 0.5;
-                break;
-            case 3:
-                velocidade = 0.25;
-                break;
-            default:
-            System.out.println("Clique em um botão valido");
-            
-        }
-
-        return velocidade;
-    }
+   
+   
 
     public static void executarAcaoMenu(int opcaoSelecionada) {
         
@@ -135,15 +118,13 @@ public class TCA_FNF {
 
         switch (opcaoSelecionada) {
             case 0:
-                System.out.println("\n\nJogar selecionado.\n\n");
+                System.out.println("\n\nJogar selecionado.");
+                System.out.println("esoclha uma dificuldade.");
+                
 
                 break;
+
             case 1:
-                System.out.println("\n\nConfigurações selecionado.\n\n");
-
-
-                break;
-            case 2:
                 System.out.println("\n\nSobre selecionado.\n");
                 setColor(9);
                 System.out.println("Código realizado por João Pedro Peres da Silva e Laura Mayumi Benedito Assakura."); 
@@ -162,12 +143,9 @@ public class TCA_FNF {
     
     public static void main(String[] args) {
 
-        double dificuladade = definirDificuldade();
-
 
         String [] opcoes = {            
             "Jogar            ",
-            "Configuracoes    ",
             "Sobre            ",
         };
 
@@ -185,6 +163,7 @@ public class TCA_FNF {
                         if (opcaoSelecionada < 0) {
                             opcaoSelecionada = opcoes.length - 1;
                         }
+
                         atualizarMenu(opcaoSelecionada, opcoes);
                         break;  
 
