@@ -48,10 +48,10 @@ public class TCA_FNF {
         limparConsole();
 
         double intervalo;
-        double facil = 1.0;
+        double facil = 0.75;
         double medio = 0.5;
         double dificil = 0.25;
-        double impossivel = 0.1;
+        double impossivel = 0.15;
         double padrao = 1.0;
 
         switch (d) {
@@ -123,12 +123,12 @@ public class TCA_FNF {
             }
 
             char teclaNaLinhaFinal = ' ';
-            int colunaFinal = -1;
+            int ultimaColuna = -1;
 
             for (int j = 0; j < colunas; j++) {
                 if (matriz[linhas - 1][j] != ' ') {
                     teclaNaLinhaFinal = matriz[linhas - 1][j];
-                    colunaFinal = j;
+                    ultimaColuna = j;
                     break;
                 }
             }
