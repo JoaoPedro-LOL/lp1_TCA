@@ -11,8 +11,7 @@ public class TCA_FNF {
         System.out.print("\u001b[38;5;" + cor + "m");
     }
 
-   
-
+    // reseta cor para padrão
     public static void resetColor() {
         System.out.print("\u001b[0m");
     }
@@ -25,28 +24,27 @@ public class TCA_FNF {
         int _getch();
     }
 
+    // retorna true se alguma tecla foi pressionada
     public static boolean pressionouTecla() {
         return Crt.INSTANCE._kbhit() != 0;
     }
 
+    // obtém a tecla pressionada
     public static int obtemTeclaPressionada() {
         return Crt.INSTANCE._getch();
 
     }
 
+    // limpa completamente o console
     public static void limparConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
-    public static void gotoXY(int linha, int coluna) {
-        char escCode = 0x1B;
-        System.out.print(String.format("%c[%d;%df", escCode, linha, coluna));
-    }
-
     public static void iniciarJogoComDificuldade(int d) {
         limparConsole();
 
+        // intervalos de tempo para cada dificuldade
         double intervalo;
         double facil = 0.75;
         double medio = 0.5;
@@ -54,6 +52,7 @@ public class TCA_FNF {
         double impossivel = 0.15;
         double padrao = 1.0;
 
+        // define o intervalo com base na dificuldade
         switch (d) {
             case 0:
                 intervalo = facil;
@@ -64,7 +63,7 @@ public class TCA_FNF {
                 break;
 
             case 2:
-    
+
                 intervalo = dificil;
                 break;
 
@@ -77,43 +76,52 @@ public class TCA_FNF {
                 break;
         }
 
+        // converte segundos para milissegundos
         long espera = (long) (intervalo * 1000);
         int linhas = 10;
         int colunas = 4;
         int pontos = 0;
 
+        // matriz do jogo
         char[][] matriz = new char[linhas][colunas];
 
+        // cada tecla corresponde uma coluna
         char[] teclasColunas = { 'w', 'e', 'r', 't' };
 
-
+        // inicializa matriz com espaços
         for (int i = 0; i < linhas; i++)
             for (int j = 0; j < colunas; j++)
                 matriz[i][j] = ' ';
 
         while (true) {
 
+            // se apertar esc sai do jogo (ou menu)
             if (pressionouTecla()) {
-                int lol = obtemTeclaPressionada();
-                if (lol == 27)
+                int esc = obtemTeclaPressionada();
+                if (esc == 27)
                     return;
             }
 
+            // move todas as linhas para baixo (notas descendo)
             for (int i = linhas - 1; i > 0; i--) {
                 for (int j = 0; j < colunas; j++) {
                     matriz[i][j] = matriz[i - 1][j];
                 }
             }
 
+            // limpa
             for (int j = 0; j < colunas; j++)
                 matriz[0][j] = ' ';
-            int nomeLegal = (int) (Math.random() * 4);
-            matriz[0][nomeLegal] = teclasColunas[nomeLegal];
+
+            // gera uma nota nova
+            int notaNova = (int) (Math.random() * 4);
+            matriz[0][notaNova] = teclasColunas[notaNova];
 
             limparConsole();
             System.out.println("Pontos: " + pontos);
             System.out.println("Pressione (ESC) para sair.\n");
 
+            // imprime matriz do jogo
             for (int i = 0; i < linhas; i++) {
                 System.out.print("| ");
                 for (int j = 0; j < colunas; j++) {
@@ -122,20 +130,22 @@ public class TCA_FNF {
                 System.out.println("|");
             }
 
+            // procura a nota na última linha
             char teclaNaLinhaFinal = ' ';
-            int ultimaColuna = -1;
 
             for (int j = 0; j < colunas; j++) {
                 if (matriz[linhas - 1][j] != ' ') {
                     teclaNaLinhaFinal = matriz[linhas - 1][j];
-                    ultimaColuna = j;
+                    j = -1;
                     break;
                 }
             }
 
+            // se há nota no final deve ser pressionada a tecla correta
+
             if (teclaNaLinhaFinal != ' ') {
                 long tempoInicio = System.currentTimeMillis();
-                boolean respondeu = false;
+
 
                 while (System.currentTimeMillis() - tempoInicio < espera) {
                     if (pressionouTecla()) {
@@ -144,8 +154,9 @@ public class TCA_FNF {
 
                         if (t == teclaNaLinhaFinal) {
                             pontos++;
-                            respondeu = true;
+
                             break;
+
                         } else {
                             limparConsole();
                             System.out.println("GAME OVER!");
@@ -158,6 +169,7 @@ public class TCA_FNF {
                 }
             }
 
+            // faz a matriz do jogo não descer toda de uma vez
             try {
                 Thread.sleep(espera);
             } catch (Exception e) {
@@ -214,11 +226,11 @@ public class TCA_FNF {
                             opc = 0;
                         break;
 
-                    case 13:
+                    case 13: // ENTER
                         iniciarJogoComDificuldade(opc);
                         return;
 
-                    case 27:
+                    case 27: // ESC
                         return;
                 }
             }
@@ -296,10 +308,8 @@ public class TCA_FNF {
                 setColor(9);
                 System.out.println("Código realizado por João Pedro Peres da Silva e Laura Mayumi Benedito Assakura.");
                 System.out.println("Este codigo foi inspirado em guitar hero e friday night funkin'\n\n");
+                System.out.println("Use as teclas w e r t");
                 resetColor();
-                break;
-            default:
-                System.out.println("\n\nOpção inválida.\n\n");
                 break;
         }
         System.out.println("Pressione uma tecla para continuar...");
