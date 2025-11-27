@@ -3,18 +3,40 @@ import com.sun.jna.Native;
 
 public class TCA_FNF {
 
-    public static void setCor256(int cor) {
-        if (cor < 0 || cor > 255) {
-            resetColor();
-            return;
-        }
-        System.out.print("\u001b[38;5;" + cor + "m");
-    }
-
     // reseta cor para padrão
     public static void resetColor() {
         System.out.print("\u001b[0m");
     }
+
+    //muda a cor das notas 
+    public static String corDaNota(char nota) {
+        nota = Character.toLowerCase(nota);
+
+        switch (nota) {
+            case 'w':
+                return "\u001b[34m"; 
+
+            case 'e':
+                return "\u001b[32m"; 
+
+            case 'r':
+                return "\u001b[33m"; 
+
+            case 't':
+                return "\u001b[31m"; 
+
+            default:
+                return "\u001b[0m"; 
+        }
+    }
+
+    public static void printNotaColorida(char nota) {
+    if (nota == ' ') {
+        System.out.print(" ");
+        return;
+    }
+    System.out.print(corDaNota(nota) + nota + "\u001b[0m");
+}
 
     public interface Crt extends Library {
         Crt INSTANCE = Native.load("msvcrt", Crt.class);
@@ -125,7 +147,8 @@ public class TCA_FNF {
             for (int i = 0; i < linhas; i++) {
                 System.out.print("| ");
                 for (int j = 0; j < colunas; j++) {
-                    System.out.print(matriz[i][j] + " ");
+                    printNotaColorida(matriz[i][j]);
+                    System.out.print(" ");
                 }
                 System.out.println("|");
             }
@@ -136,7 +159,6 @@ public class TCA_FNF {
             for (int j = 0; j < colunas; j++) {
                 if (matriz[linhas - 1][j] != ' ') {
                     teclaNaLinhaFinal = matriz[linhas - 1][j];
-                    j = -1;
                     break;
                 }
             }
@@ -145,7 +167,6 @@ public class TCA_FNF {
 
             if (teclaNaLinhaFinal != ' ') {
                 long tempoInicio = System.currentTimeMillis();
-
 
                 while (System.currentTimeMillis() - tempoInicio < espera) {
                     if (pressionouTecla()) {
@@ -195,7 +216,7 @@ public class TCA_FNF {
             for (int i = 0; i < dificuldades.length; i++) {
                 if (i == opc) {
                     System.out.print("║> ");
-                    setColor(2);
+                    setColor(1);
                     System.out.print(dificuldades[i]);
                     resetColor();
                     System.out.println(" ║");
@@ -240,29 +261,14 @@ public class TCA_FNF {
     public static void setColor(int cor) {
         String s = "[0m";
         switch (cor) {
-            case 0:
-                s = "[30m";
-                break;
             case 1:
-                s = "[31m";
-                break;
-            case 2:
                 s = "[32m";
                 break;
-            case 3:
-                s = "[33m";
-                break;
-            case 4:
-                s = "[34m";
-                break;
-            case 5:
-                s = "[35m";
-                break;
-            case 6:
-                s = "[36m";
-                break;
-            case 7:
+            case 2:
                 s = "[97m";
+                break; 
+            case 3:
+                s = "[35m"; 
                 break;
         }
 
@@ -278,9 +284,9 @@ public class TCA_FNF {
         for (int i = 0; i < opcoes.length; i++) {
             if (i == opcaoSelecionada) {
                 System.out.print("║> ");
-                setColor(2);
+                setColor(1);
                 System.out.print(opcoes[i]);
-                setColor(7);
+                setColor(2);
                 System.out.println("  ║");
             } else {
                 System.out.println("║  " + opcoes[i] + "  ║");
@@ -305,10 +311,10 @@ public class TCA_FNF {
 
             case 1:
                 System.out.println("\n\nSobre selecionado.\n");
-                setColor(9);
+                setColor(3);
                 System.out.println("Código realizado por João Pedro Peres da Silva e Laura Mayumi Benedito Assakura.");
-                System.out.println("Este codigo foi inspirado em guitar hero e friday night funkin'\n\n");
-                System.out.println("Use as teclas w e r t");
+                System.out.println("Este codigo foi inspirado em guitar hero e friday night funkin'");
+                System.out.println("Use as teclas w e r t\n\n");
                 resetColor();
                 break;
         }
