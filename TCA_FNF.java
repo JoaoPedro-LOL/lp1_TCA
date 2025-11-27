@@ -10,7 +10,6 @@ public class TCA_FNF {
 
     //muda a cor das notas 
     public static String corDaNota(char nota) {
-        nota = Character.toLowerCase(nota);
 
         switch (nota) {
             case 'w':
@@ -34,15 +33,13 @@ public class TCA_FNF {
     if (nota == ' ') {
         System.out.print(" ");
         return;
-    }
+    }                                        // reset color
     System.out.print(corDaNota(nota) + nota + "\u001b[0m");
 }
 
     public interface Crt extends Library {
         Crt INSTANCE = Native.load("msvcrt", Crt.class);
-
         int _kbhit();
-
         int _getch();
     }
 
@@ -63,7 +60,7 @@ public class TCA_FNF {
         System.out.flush();
     }
 
-    public static void iniciarJogoComDificuldade(int d) {
+    public static void iniciarJogo(int d) {
         limparConsole();
 
         // intervalos de tempo para cada dificuldade
@@ -124,14 +121,14 @@ public class TCA_FNF {
                     return;
             }
 
-            // move todas as linhas para baixo (notas descendo)
+            // move todas as linhas para baixo (as notas descem)
             for (int i = linhas - 1; i > 0; i--) {
                 for (int j = 0; j < colunas; j++) {
                     matriz[i][j] = matriz[i - 1][j];
                 }
             }
 
-            // limpa
+            // não vai deixar acomular nota na tela
             for (int j = 0; j < colunas; j++)
                 matriz[0][j] = ' ';
 
@@ -227,7 +224,7 @@ public class TCA_FNF {
 
             System.out.println("╚══════════════════════════╝");
             System.out.println();
-            System.out.println("Use (W/S) para navegar e (ENTER) para selecionar. (ESC) para voltar.");
+            System.out.println("Use (W/S) para navegar e (ENTER) para selecionar (ESC) para voltar.");
 
             if (pressionouTecla()) {
                 int ch = obtemTeclaPressionada();
@@ -248,7 +245,7 @@ public class TCA_FNF {
                         break;
 
                     case 13: // ENTER
-                        iniciarJogoComDificuldade(opc);
+                        iniciarJogo(opc);
                         return;
 
                     case 27: // ESC
@@ -294,7 +291,7 @@ public class TCA_FNF {
         }
         System.out.println("╚═════════════════════╝");
         System.out.println();
-        System.out.println("Use (W/S) para navegar e (ENTER) para selecionar. (ESC) para sair.");
+        System.out.println("Use (W/S) para navegar e (ENTER) para selecionar (ESC) para sair.");
 
     }
 
@@ -306,10 +303,10 @@ public class TCA_FNF {
             case 0:
                 System.out.println("\n\nJogar selecionado.");
                 menuDificuldade();
-
                 break;
 
             case 1:
+                
                 System.out.println("\n\nSobre selecionado.\n");
                 setColor(3);
                 System.out.println("Código realizado por João Pedro Peres da Silva e Laura Mayumi Benedito Assakura.");
