@@ -177,7 +177,7 @@ public class TCA_FNF {
 
                         } else {
                             limparConsole();
-                            System.out.println("GAME OVER!");
+                            System.out.println("GAME OVER!!!");
                             System.out.println("Pontuação final: " + pontos);
                             System.out.println("\nPressione qualquer tecla para voltar ao menu");
                             obtemTeclaPressionada();
@@ -197,7 +197,7 @@ public class TCA_FNF {
 
     public static void menuDificuldade() {
         String[] dificuldades = new String[4];
-        dificuldades[0] = "Fácil       (1.00s)    ";
+        dificuldades[0] = "Fácil       (0.75s)    ";
         dificuldades[1] = "Média       (0.50s)    ";
         dificuldades[2] = "Difícil     (0.25s)    ";
         dificuldades[3] = "Impossível  (?????)    ";
@@ -312,10 +312,11 @@ public class TCA_FNF {
                 System.out.println("Código realizado por João Pedro Peres da Silva e Laura Mayumi Benedito Assakura.");
                 System.out.println("Este codigo foi inspirado em guitar hero e friday night funkin'");
                 System.out.println("Use as teclas w e r t\n\n");
+                System.out.println("Pressione uma tecla para continuar...");
                 resetColor();
                 break;
         }
-        System.out.println("Pressione uma tecla para continuar...");
+
         obtemTeclaPressionada();
         limparConsole();
 
